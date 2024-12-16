@@ -31,6 +31,8 @@ class AuthController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
+        $user->assignRole('user');
+
         return response()->json([
             'status' => Response::HTTP_CREATED,
             'message' => 'User created successfully',
@@ -39,6 +41,7 @@ class AuthController extends Controller
     }
 
     public function login_(LoginRequest $request){
+
         $request->validated();
 
         if(Auth::attempt(["email" => $request->email, "password" => $request->password])) {
